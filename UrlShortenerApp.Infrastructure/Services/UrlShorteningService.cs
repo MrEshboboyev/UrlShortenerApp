@@ -1,4 +1,6 @@
-﻿using UrlShortenerApp.Application.Common.Interfaces;
+﻿using Microsoft.Extensions.Configuration;
+using UrlShortenerApp.Application.Common.Interfaces;
+using UrlShortenerApp.Application.Common.Models;
 using UrlShortenerApp.Application.Services.Interfaces;
 using UrlShortenerApp.Domain.Entities;
 
@@ -6,12 +8,15 @@ namespace UrlShortenerApp.Infrastructure.Services
 {
     public class UrlShorteningService : IUrlShorteningService
     {
-        // inject IShortenedUrlRepository
+        // inject IShortenedUrlRepository, IConfiguration
         private readonly IShortenedUrlRepository _repository;
+        private readonly string _baseUrl;
 
-        public UrlShorteningService(IShortenedUrlRepository repository)
+        public UrlShorteningService(IShortenedUrlRepository repository,
+            IConfiguration config)
         {
             _repository = repository;
+            _baseUrl = config["AppSettings:BaseUrl"];
         }
 
         public async Task<string> ResolveUrl(string shortUrl)
@@ -25,19 +30,23 @@ namespace UrlShortenerApp.Infrastructure.Services
             return shortenedUrl.LongUrl;
         }
 
-        public async Task<string> ShortenUrl(string longUrl)
+        public async Task<string> ShortenUrl(UrlDto urlDto)
         {
             var shortUrl = GenerateShortUrl();
             var shortenedUrl = new ShortenedUrl()
             {
                 CreatedAt = DateTime.UtcNow,
-                LongUrl = longUrl,
+                LongUrl = urlDto.LongUrl,
+                Description = urlDto.Description,
+                CustomAlias = urlDto.CustomAlias,
                 ShortUrl = shortUrl,
                 ExpirationDate = DateTime.UtcNow.AddHours(12)
             };
 
             await _repository.Create(shortenedUrl);
-            return shortUrl;
+
+
+            return $"{_baseUrl}{shortUrl}";
         }
 
         #region Private Methods

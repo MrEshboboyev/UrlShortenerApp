@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using UrlShortenerApp.Application.Common.Models;
 using UrlShortenerApp.Application.Services.Interfaces;
 
 namespace UrlShortenerApp.API.Controllers
@@ -17,9 +18,9 @@ namespace UrlShortenerApp.API.Controllers
 
         [HttpPost]
         [Route("shorten")]
-        public async Task<IActionResult> ShortenUrl([FromBody] string longUrl)
+        public async Task<IActionResult> ShortenUrl([FromBody] UrlDto urlDto)
         {
-            var shortUrl = await _urlShorteningService.ShortenUrl(longUrl);
+            var shortUrl = await _urlShorteningService.ShortenUrl(urlDto);
             return Ok(new { ShortUrl = shortUrl });
         }
 
