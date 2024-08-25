@@ -4,7 +4,7 @@ using UrlShortenerApp.Application.Services.Interfaces;
 
 namespace UrlShortenerApp.API.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("")]
     [ApiController]
     public class UrlShortenerController : ControllerBase
     {
@@ -28,7 +28,7 @@ namespace UrlShortenerApp.API.Controllers
         public async Task<IActionResult> ResolveUrl(string shortUrl)
         {
             var longUrl = await _urlShorteningService.ResolveUrl(shortUrl);
-            return Ok(new { LongUrl = longUrl });
+            return Redirect(longUrl);
         }
     }
 }
