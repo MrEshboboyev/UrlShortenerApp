@@ -29,7 +29,7 @@ namespace UrlShortenerApp.Infrastructure.Services
             var shortenedUrl = await _repository.GetByShortUrl(extractedShortUrl);
             if (shortenedUrl == null || shortenedUrl.ExpirationDate < DateTime.UtcNow)
             {
-                return "This link has expired or does not exist.";
+                return string.Empty;
             }
 
             return shortenedUrl.LongUrl;

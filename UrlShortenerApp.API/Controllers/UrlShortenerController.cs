@@ -28,6 +28,10 @@ namespace UrlShortenerApp.API.Controllers
         public async Task<IActionResult> ResolveUrl(string shortUrl)
         {
             var longUrl = await _urlShorteningService.ResolveUrl(shortUrl);
+            if (string.IsNullOrEmpty(longUrl))
+            {
+                return NotFound("This link has expired or does not exist.");
+            }
             return Redirect(longUrl);
         }
 
