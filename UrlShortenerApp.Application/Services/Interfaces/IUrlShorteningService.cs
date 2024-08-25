@@ -3,6 +3,6 @@
     public interface IUrlShorteningService
     {
         Task<string> ShortenUrl(string longUrl);
-        Task<string> LongerUrl(string shortUrl);
+        Task<string> ResolveUrl(string shortUrl);
     }
 }
