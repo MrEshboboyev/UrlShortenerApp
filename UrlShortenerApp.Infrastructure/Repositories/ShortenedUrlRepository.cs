@@ -23,7 +23,14 @@ namespace UrlShortenerApp.Infrastructure.Repositories
 
         public async Task<ShortenedUrl> GetByShortUrl(string shortUrl)
         {
-            return await _db.ShortenedURLs.SingleOrDefaultAsync(s => s.ShortUrl == shortUrl);
+            var shortenedUrl = await _db.ShortenedURLs.SingleOrDefaultAsync(s => s.ShortUrl == shortUrl);
+            if (shortenedUrl is not null)
+            {
+                shortenedUrl.HitCount++;
+                _db.ShortenedURLs.Update(shortenedUrl);
+                await _db.SaveChangesAsync();
+            }
+            return shortenedUrl;
         }
 
         public async Task<bool> ShortUrlExist(int shortId)
