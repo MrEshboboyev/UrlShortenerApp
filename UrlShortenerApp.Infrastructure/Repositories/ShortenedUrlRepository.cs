@@ -30,5 +30,10 @@ namespace UrlShortenerApp.Infrastructure.Repositories
         {
             return await _db.ShortenedURLs.AnyAsync(s => s.Id == shortId);
         }
+
+        public async Task<IEnumerable<ShortenedUrl>> GetAllURLs()
+        {
+            return await _db.ShortenedURLs.ToListAsync();
+        }
     }
 }

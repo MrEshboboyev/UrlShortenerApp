@@ -1,4 +1,5 @@
 ﻿using UrlShortenerApp.Application.Common.Models;
+using UrlShortenerApp.Domain.Entities;
 
 namespace UrlShortenerApp.Application.Services.Interfaces
 {
@@ -6,5 +7,6 @@ namespace UrlShortenerApp.Application.Services.Interfaces
     {
         Task<string> ShortenUrl(UrlDto urlDto);
         Task<string> ResolveUrl(string shortUrl);
+        Task<IEnumerable<ShortenedUrl>> GetAllURLs();
     }
 }

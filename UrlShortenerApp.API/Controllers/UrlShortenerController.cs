@@ -30,5 +30,11 @@ namespace UrlShortenerApp.API.Controllers
             var longUrl = await _urlShorteningService.ResolveUrl(shortUrl);
             return Redirect(longUrl);
         }
+
+        [HttpGet]
+        public async Task<IActionResult> GetAllURLs()
+        {
+            return Ok(await _urlShorteningService.GetAllURLs());
+        }
     }
 }

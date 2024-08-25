@@ -54,6 +54,11 @@ namespace UrlShortenerApp.Infrastructure.Services
             return $"{_baseUrl}{shortUrl}";
         }
 
+        public async Task<IEnumerable<ShortenedUrl>> GetAllURLs()
+        {
+            return await _repository.GetAllURLs();
+        }
+
         #region Private Methods
         private string GenerateShortUrl()
         {

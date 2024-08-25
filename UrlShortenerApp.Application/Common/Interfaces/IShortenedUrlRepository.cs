@@ -7,5 +7,6 @@ namespace UrlShortenerApp.Application.Common.Interfaces
         Task<ShortenedUrl> GetByShortUrl(string shortUrl);
         Task Create(ShortenedUrl shortenedUrl);
         Task<bool> ShortUrlExist(int shortId);
+        Task<IEnumerable<ShortenedUrl>> GetAllURLs();
     }
 }
