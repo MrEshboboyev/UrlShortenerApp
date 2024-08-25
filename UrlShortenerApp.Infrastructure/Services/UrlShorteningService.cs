@@ -21,7 +21,12 @@ namespace UrlShortenerApp.Infrastructure.Services
 
         public async Task<string> ResolveUrl(string shortUrl)
         {
-            var shortenedUrl = await _repository.GetByShortUrl(shortUrl);
+            // Decode the URL-encoded shortUrl
+            var decodedUrl = Uri.UnescapeDataString(shortUrl);
+
+            // Extract the part after the last '/'
+            var extractedShortUrl = decodedUrl.Substring(decodedUrl.LastIndexOf('/') + 1);
+            var shortenedUrl = await _repository.GetByShortUrl(extractedShortUrl);
             if (shortenedUrl == null || shortenedUrl.ExpirationDate < DateTime.UtcNow)
             {
                 return "This link has expired or does not exist.";
