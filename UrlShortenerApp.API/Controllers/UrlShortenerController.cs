@@ -1,0 +1,33 @@
+﻿using Microsoft.AspNetCore.Mvc;
+using UrlShortenerApp.Application.Services.Interfaces;
+
+namespace UrlShortenerApp.API.Controllers
+{
+    [Route("api/[controller]")]
+    [ApiController]
+    public class UrlShortenerController : ControllerBase
+    {
+        // inject IUrlShorteningService
+        private readonly IUrlShorteningService _urlShorteningService;
+
+        public UrlShortenerController(IUrlShorteningService urlShorteningService)
+        {
+            _urlShorteningService = urlShorteningService;
+        }
+
+        [HttpPost]
+        [Route("shorten")]
+        public async Task<IActionResult> ShortenUrl([FromBody] string longUrl)
+        {
+            var shortUrl = await _urlShorteningService.ShortenUrl(longUrl);
+            return Ok(new { ShortUrl = shortUrl });
+        }
+
+        [HttpGet("{shortUrl}")]
+        public async Task<IActionResult> RedirectUrl(string shortUrl)
+        {
+            var longUrl = await _urlShorteningService.ResolveUrl(shortUrl);
+            return Redirect(longUrl);
+        }
+    }
+}

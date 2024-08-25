@@ -15,10 +15,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Controllers\" />
-  </ItemGroup>
-
-  <ItemGroup>
     <ProjectReference Include="..\UrlShortenerApp.Infrastructure\UrlShortenerApp.Infrastructure.csproj" />
   </ItemGroup>
 
