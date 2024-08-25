@@ -6,4 +6,8 @@
     <Nullable>enable</Nullable>
   </PropertyGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\UrlShortenerApp.Domain\UrlShortenerApp.Domain.csproj" />
+  </ItemGroup>
+
 </Project>
